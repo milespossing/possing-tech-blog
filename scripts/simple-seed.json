@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "title": "Test Post 1",
+      "shortName": "test1",
+      "date": "2020-07-10",
+      "author": "Miles Possing",
+      "body": "This is my post. It's not a great one, but I tried my best!"
+    },
+    {
+      "title": "Test Post 2",
+      "shortName": "test2",
+      "date": "2020-07-09",
+      "author": "Miles Possing",
+      "body": "This is my post. It's not a great one, but I tried my best!"
+    }
+  ]
+}
