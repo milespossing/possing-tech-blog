@@ -88,3 +88,13 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+function funcB(a,b,c,d){
+  console.log(a,b,c,d);
+}
+
+function funcA(callback){
+  callback(2);
+}
+
+funcA(prop => funcB(1,2,3,prop));
