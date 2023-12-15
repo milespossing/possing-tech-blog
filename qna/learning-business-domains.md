@@ -81,12 +81,12 @@ erDiagram
     R[Royalty]
     S[Statement]
     I[Invoice]
-    T }|--o{ C : ""
-    T ||--o{ R : ""
-    R ||--|| C : ""
-    R }o--|| S : ""
-    S ||--|| C : ""
-    S ||--|| I : ""
+    T }|--o{ C : "has"
+    T ||--o{ R : "has"
+    R ||--|| C : "has"
+    R }o--|| S : "has"
+    S ||--|| C : "has"
+    S ||--|| I : "has"
 ```
 
 Once you're understanding the data model _and_ how it relates to the business, I
