@@ -4,9 +4,9 @@ erDiagram
     R[Royalty]
     S[Statement]
     I[Invoice]
-    T }|--o{ C : "has"
-    T ||--o{ R : "has"
-    R ||--|| C : "has"
-    R }o--|| S : "has"
-    S ||--|| C : "has"
-    S ||--o| I : "has"
+    T }|--o{ C : "transactions applied to"
+    T ||--o{ R : "transaction yields"
+    R ||--|| C : "royalty for"
+    R }o--|| S : "sum of"
+    S ||--|| C : "statement for"
+    S ||--o| I : "paid through"
