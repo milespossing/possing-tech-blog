@@ -1,0 +1,12 @@
+erDiagram
+    C[Contract]
+    T[Transaction]
+    R[Royalty]
+    S[Statement]
+    I[Invoice]
+    T }|--o{ C : "has"
+    T ||--o{ R : "has"
+    R ||--|| C : "has"
+    R }o--|| S : "has"
+    S ||--|| C : "has"
+    S ||--|| I : "has"
