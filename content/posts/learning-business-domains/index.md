@@ -1,4 +1,10 @@
-# Learning Business Domains
+---
+title: Learning Business Domains
+date: 2023-12-15
+draft: false
+tags: 
+  - Q&As
+---
 
 ## Question
 
@@ -44,12 +50,7 @@ the face of it. We get transactions in, we compute on a per transaction basis
 the royalties, we sum those up into the statements, and we produce invoices for
 those statements.
 
-Don't discount this: the power of building basic models of the most critical
-business flows in the system you work on is very important. You'll find that
-nearly everything in royalties will be related to one of those 4 steps. We do
-have other deliverables, and there are a lot of technicals related to those 4
-steps, but whenever you're lost, finding yourself in the business flow can help
-a lot.
+Don't discount this: the power of building basic models of the most critical business flows in the system you work on is very important. You'll find that nearly everything in royalties will be related to one of those 4 steps. We do have other deliverables, and there are a lot of technicals related to those 4 steps, but whenever you're lost, finding yourself in the business flow can help a lot.
 
 ### Technicals
 
@@ -74,7 +75,7 @@ technical data model in the database. I'd normally ask for a couple of things:
 
 For example
 
-![er-graph](./basic-er.png)
+![image](basic-er.jpg)
 
 Once you're understanding the data model _and_ how it relates to the business, I
 promise that you'll feel much more in command of your work.

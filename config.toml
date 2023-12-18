@@ -1,0 +1,8 @@
+baseURL = 'https://milespossing.github.io'
+languageCode = 'en-us'
+title = "Miles Possing's Blog"
+theme = 'ananke'
+
+[taxonomies]
+  category = 'categories'
+  tags = 'tags'
