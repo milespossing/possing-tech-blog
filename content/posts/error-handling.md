@@ -2,6 +2,7 @@
 title: "Error Handling Paradigms"
 tags: 
   - Code Patterns
+draft: false
 date: 2024-01-01
 ---
 
