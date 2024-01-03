@@ -4,14 +4,15 @@ author: Miles Possing
 tags:
   - Code Patterns
 draft: false
-date: 2024-01-01
+date: 2024-01-04
 ---
 
 ## Introduction
 
 Error handling is a huge beast, and I'm only going to cover a subset of the overall ideas in it
 here. This will serve as a reasonable explanation of how I see error handling, and the majority
-of useful cases one will handle or implement. 
+of useful cases one will handle or implement. I'll focus on how errors are handled in basic
+imperative programs, but the ideas extend upwards to much more advanced programs.
 
 ## Disclaimer
 
