@@ -3,7 +3,7 @@ title: Error Handling Paradigms
 author: Miles Possing
 tags:
   - Code Patterns
-draft: true
+draft: false
 date: 2024-01-01
 ---
 
