@@ -2,6 +2,7 @@
 title: Learning Business Domains
 date: 2023-12-15
 draft: false
+author: Miles Possing
 tags: 
   - Q&As
 ---
