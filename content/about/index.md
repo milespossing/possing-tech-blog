@@ -1,6 +1,5 @@
 ---
 title: About Me
-
 ---
 
 My name is Miles and I am passionate about solving problems efficiently and elegantly and helping other
