@@ -1,0 +1,8 @@
+version: "2"
+services:
+  server:
+    image: klakegg/hugo
+    volumes:
+      - ".:/src"
+    ports:
+      - "1313:1313"

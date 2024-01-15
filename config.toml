@@ -6,3 +6,29 @@ theme = 'PaperMod'
 [taxonomies]
   category = 'categories'
   tags = 'tags'
+
+[params]
+title = "Miles Possing's Blog"
+
+[params.profileMode]
+  enabled = true
+
+[[params.profileMode.buttons]]
+name = "Posts"
+url = "posts"
+
+[[params.profileMode.buttons]]
+name = "Tags"
+url = "tags"
+
+[[menu.main]]
+identifier = "posts"
+name = "posts"
+url = "/posts/"
+weight = 10
+
+[[menu.main]]
+identifier = "about"
+name = "about"
+url = "/about/"
+weight = 10
