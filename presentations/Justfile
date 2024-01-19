@@ -1,0 +1,4 @@
+
+
+serve:
+    npx marp -c ./marp.config.js -s .
