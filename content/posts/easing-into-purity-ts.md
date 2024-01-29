@@ -6,6 +6,33 @@ katex: true
 
 # OUTLINE
 
+## Things we care about in software
+
+- Correctness
+  - Does it do what we think it will?
+  - Can we follow the flow of code?
+
+- Code quality
+  - Testability
+  - Readability
+  - Reusability
+  
+- Performance
+  - Execution Performance
+  - Correctness under parallelism
+  
+- Correctness: Several key features 
+  
+## On the growth of Paradigms
+
+- Historically we've always added structure to engineering practice, freedom through restriction
+- Operate at the HIGHEST level of restriction while still being able to perform the basic job
+
+## The functional paradigm
+
+- Use of pure functions
+- Data mutation is forbidden
+
 ## 4 examples of common, impure code:
 
 - code with a read reference to global state, RNG, DateTime
@@ -13,16 +40,140 @@ katex: true
 - code which throws an exception
 - code which returns a Promise<T> instance
 
+```typescript
+let state = 0;
+const example1 = (): number => {
+    const rnd = Random.next();
+    return rnd * state;
+}
+
+const example2 = (input: number) => {
+    state = input * 2;
+}
+
+const divide = (a: number, b: number): number => {
+    if (b === 0) throw new Error('Cannot divide by zero!');
+    return a / b;
+}
+
+const complicated = async (id: string): Promise<Invoice> => {
+    // get the invoice
+    const result = await db.collection('invoices').find({ id });
+    // get its statement
+    const statement = awaid db.collection('statements').find({ id: result.statementId });
+    // update the invoice with data from the statement
+    result.someField = statement.someOtherField;
+    return result;
+}
+```
+
 ## Functional Impurity: the dangers hand hassles
 
-- Dangers of state
-- Unit testing difficulties with state
-- Requires system-wide knowledge to code on any part of the system
+So I complain a lot about impurity. But as far as you're concerned, planes are still
+flying, cars are still driving, and you might still be coding imperatively, so why
+make any kind of switch? Here are some potential arguments.
 
-## Enter functional Purity
+### Why is state bad?
 
-- What are pure functions?
-- Why are they important? What do they get you?
+For starters, state is potentially dangerous. The developer of a function may have a good
+understanding of how the state will change over time, but they will not always be there.
+Adding some external state to your function or object means that if it does need to operate
+on some external data, you need to have broad _system-wide_ understanding of the agents which
+mutate the state. This, of course means that any users of the function also need to have
+such an understanding.
+
+### Statefulness and Testing
+
+Statefulness introduces a new vector to test over. Take this function:
+
+```typescript
+let state = 0;
+const example1 = (): number => {
+    const rnd = Random.next();
+    return rnd * state;
+}
+```
+
+In order to test the above, you would need to gather together whatever agents mutate
+the above code and make sure that they do in fact make the required change to `state`.
+
+More haneously, let's look at this one (a common mainstay in the royalties system):
+
+```typescript
+const complicated = async (id: string): Promise<Invoice> => {
+    // get the invoice
+    const result = await db.collection('invoices').find({ id });
+    // get its statement
+    const statement = awaid db.collection('statements').find({ id: result.statementId });
+    // don't do anything if it's a test statement
+    if (statement.type === 'TEST')
+        return undefined;
+    // update the invoice with data from the statement
+    result.someField = statement.someOtherField;
+    return result;
+}
+```
+
+Here the state of `db` (our database client) itself is actually stateful. Let alone
+the external state fo the database for a moment (a necessary impurity) we find ourselves
+quite unable to test this logic without first bringing along the entire state of the
+application (in whether the db has been connected) as well as the state of the database.
+
+So in order to test the above, even for a simple unit test to test requires a huge amount
+of manipulation of the app just to be able to test the basics of the business logic.
+
+### System-Wide Knowledge
+
+I actually have quite a good working memory. I can keep a fair amount of things in my
+head at the same time, and I'd rank my memory and ability to keep very large amounts
+of system architecture in my head as above average.
+
+Even I fail to encasulate entire systems.
+
+I will never be in a place where I can hold the entire system in my head, and I'm not
+trying to get there anyway.
+
+The fact is, the more we can reduce the amount of system knowledge you need at a given
+moment (ie, the clearer you keep your RAM), the more focus you can put towards the task
+at hand.
+
+[[[[[[[Might want a better example here]]]]]]]
+Take an example, you want to make a sandwich for some children. If we're making a sandwich
+for our own children, with our own ingredients, in our own kitchen, we know about all the
+externalities, so it doesn't matter much
+[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]
+
+In functional programming, you can make as many demands on the state of your function
+and its context of execution as you'd like. The stronger the better. For example, why
+not just the following:
+
+```typescript
+
+// I'm using some funny code here as an example, fp-ts has all
+// the monads you need
+type Option<T> = None | Some<T>(t: T)
+
+// note on types, I use a record here to be lazy, you can do
+// whatever you'd like here
+const simple = (invoice, statement): Option<Record<string, any>> {
+    if (statement.type === 'TEST')
+        return None;
+    return Some({ ...invoice, someField: statement.someOtherField });
+}
+
+// "Do" notation for the composition of the invoice and statement left to the reader
+```
+
+Now some of you might complain that I've cheated here, why am I allowed to just take
+out the parts of the app which, by my own admission, _do_ actually need to be there.
+
+Well for starters this is my blog post, so I cak skip some stuff. More realistically
+I'd argue that the real healthy thing for that function would be to separate out the
+two concerns. You have the IO concerns which could be described as a function returning
+some variety of `IO<(Invoice, Statement)>` (most likely a `TaskEither<Error, [Statement, Invoice]>`
+in `fp-ts`), and a function which would be used in a fancy something called a **functor**
+(which can be seen later in this post).
+
 
 ## Final Code Examples
 
@@ -30,6 +181,8 @@ katex: true
 - Either
 - TaskEither
 - Monadic mapping `::map A<T> -> A<U>`
+
+
 
 ## My Background
 
