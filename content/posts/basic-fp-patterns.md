@@ -98,7 +98,7 @@ const arrayMap = <A,B>(f: (a: A) => B): A[] => B[]
 ```
 
 Or in plain English: "If I know how to change an A into a B, I also know how to change
-an **Array** of A into an **Array** of B. It's also important to note that the data
+an **Array** of A into an **Array** of B". It's also important to note that the data
 doesn't stop being an array just because it's been mapped, it's always an array.
 
 ### Flat Maps
