@@ -1,4 +1,4 @@
-baseURL = 'https://milespossing.github.io'
+baseURL = 'https://milespossing.github.io/possing-tech-blog/'
 languageCode = 'en-us'
 title = "Miles Possing's Blog"
 theme = 'PaperMod'
