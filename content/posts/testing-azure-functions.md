@@ -4,6 +4,7 @@ tags:
   - azure functions
   - testing
 date: 2024-01-22
+author: Miles Possing
 ---
 
 With the introduction of typescript I've had a few opportunities to debug azure functions in some new ways.

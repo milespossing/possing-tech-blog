@@ -1,5 +1,11 @@
 ---
 title: "Basic FP Patterns: A code review"
+tags:
+    - Code Review
+    - Code Patterns
+    - Functional Programming
+date: 2024-02-06
+author: Miles Possing
 ---
 
 I recently put in a PR on my team in the Microsoft Royalties system and,
