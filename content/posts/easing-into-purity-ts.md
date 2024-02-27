@@ -24,6 +24,8 @@ or have never tried it themselves.
 
 ## Why is Functional Programming Important?
 
+### Software Engineering is Hard
+
 Software Engineering is a very wide practice. Even before we introduced "DevOps Culture" we needed to understand the idiosyncracies of computers,
 how software scales and design patterns to ensure it continues to be maintainable, and we need to find ways to articulate business needs within
 that framework. We maintain correctness, complexity, performance, and maintainability; and we need to do so quickly as business requirements
@@ -39,15 +41,22 @@ If you'll forgive the simplification, "Software Quality" could conscisely be put
 
 > Anything we can do to better answer these questions in our day to day is an important thing to do.
 
+### How can FP Help?
+
+Well once we recognize that, it's time to start thinking about what we can do. There are a lot of things which are necessarily endemic to
+this work we do, but not everything is. One example of complexity we see *very* often is the changing state of an application. For example
+how often have we found bugs which had to do with some faulty assumption about application state? Or about the order of execution? These
+are all caused by what we call "IO" or "Impurity", where a function or procedure relies on some externality. Another example is in complex
+flow control.
+
+FP normally requires a few things of us. It requires us to "just say no" to mutation, and it requires us to avoid "IO" at all costs.
+
+
 ## What is Functional Programming?
-
-### Notes on Paradigms
-
-### Some definitions and contrasts
 
 Functional programming can be described in many ways.
 
-In *Clean Architecture* Robert Martin describes it as the 3rd paradigm in the following:
+In *Clean Architecture* Robert Martin describes it as the 3rd paradigm in the following procession:
 
 1. Structured Programming: Remove `goto`
 2. Object Oriented Programming: Enforce **Encapsulation**
@@ -63,16 +72,52 @@ I'll also point out what I *don't* think that it is:
 - it is *not* category theory
 - it is *not* necessarily typed
 - it does *not* need to be in a "functional language"
+- it need not be extremely difficult mathematics
 
 Finally I'll state the minimum for what it takes to be a functional language (in this engineer's opinion):
 
-- Functional Programing requires the ability to pass functions as arguments
-- Functional Programing requires the ability to return functions from functions
+- Functional Programing requires the ability to pass and return functions as data
 
 Yep, I tried to think of anything else one would need, but honestly for just about everything else in FP you can roll it yourself as long
 as you can pass functions as **first class data**.
 
+Now FP paradigms normally enforce quite a bit more than that. For example we don't like mutation of any kind,
+
 ## How can I do it in typescript?
+
+Let's build this up slowly. We want to look at a couple of procedural bits of code, and then look at their more functional counter
+parts.
+
+In these examples I'm going to use terms like "issues" and "problems". From this point forward, we should assume that the discussion is already
+"assuming the sale" in terms of FP.
+
+### The accumulator
+
+There is a pattern I see pop up pretty often, and it looks like this:
+
+```typescript
+interface Datum {
+  value: number;
+  type: string;
+}
+
+function accumulate(data: Datum[]): number {
+  let result: number = 0;
+  for (var i = 0; i < data.length; i++) {
+    const current: Datum = data[i];
+    if (current.type === 'The Right Type')
+      result += current.value;
+  }
+  return result;
+}
+```
+
+So there are two basic problems:
+
+- We mutate the result to accumulate on to
+- That pesky `i` is also mutated
+
+Well this doesn't seem so bad, right? Why should this be an issue?
 
 ## On the growth of Paradigms
 
