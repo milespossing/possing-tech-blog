@@ -30,10 +30,20 @@ marp: true
 
 ---
 
+# So what is FP Not?
+
+- it is *not* category theory
+- it is *not* necessarily typed
+- it does *not* need to be in a "functional language"
+- it need not be extremely difficult mathematics
+
+---
+
 # Where is FP?
 
 - Common frameworks (Spark, Hadoop, React)
 - Huge success in the business sector (Jane Street, Twitter, Guaranteed Rate)
+- In most languages
 
 ---
 
@@ -71,7 +81,7 @@ interface DataPoint {
 
 function AccumulateTheData(data: DataPoint[]): number {
   return data
-    .filter(d => d.type === 'TheRIghtType')
+    .filter(d => d.type === 'TheRightType')
     .map(d => d.value)
     .reduce((acc,a) => acc + a)
 }
@@ -337,12 +347,36 @@ const divideAdd = (a: number, b: number) => pipe(
 
 ---
 
-# Final Boss
+# Final Boss (Imperative)
+
+```typescript
+// Here's an action, we need to leave function execution to actually run this
+const getContracts = (): Promise<Contract[]> => db.collection('contracts').find();
+const getActiveContract = (contracts: Contract[]): Contract =>
+  contracts.find(c => c.status === 'Active');
+const getContractId = (contract: Contract) => contract.contractId;
+
+const main = (): Promise<number | string> => {
+  try {
+    const contracts = await getContracts(); // I might throw
+    const active = getActiveContract(contracts);
+    if (active) {
+      return getContractId(active);
+    }
+    return undefined;
+  } catch (err) {
+    return -1;
+  }
+}
+```
+
+---
 
 ```typescript
 import * as O from 'fp-ts/Option';
 import * as A from 'fp-ts/Array';
 import * as E from 'fp-ts/Either';
+import * as T from 'fp-ts/Task';
 import * as TE from 'fp-ts/TaskEither';
 
 // Here's an action, we need to leave function execution to actually run this
@@ -354,12 +388,12 @@ const getActiveContract = (contracts: Contract[]): Option<Contract> => pipe(
 );
 const getContractId = (contract: Contract) => contract.contractId;
 
-const main = pipe(
+const main: T.Task<number | string> = pipe(
   getContracts, // :: TaskEither<Error, Contract[]>
   TE.map(getActiveContract), // :: TaskEither<Error, Option<Contract>> (yikes)
   TE.flatMapOption(() => new Error('No active contracts found')), // :: TaskEither<Error, Contract> when we have None, we return Left
   TE.map(getContractId), // :: TaskEither<Error, string>
-  // continue execution
+  TE.getOrElse(T.of(-1)),
 );
 ```
 
